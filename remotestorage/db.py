@@ -1,0 +1,22 @@
+""" create a database connection to a SQLite database with SQLmodel"""
+import sqlmodel
+from sqlmodel import SQLModel, create_engine, Field, Session, select
+from sqlmodel.pool import StaticPool
+
+
+class RemoteStorage(SQLModel, table=True):
+    id: int = Field(default=None, primary_key=True)
+    key: str = Field(default=None, index=True)
+    data: str = Field(default=None)
+
+db_url = "sqlite:///remoteStorage.db"
+
+engine = engine = create_engine(
+        db_url,
+        poolclass=StaticPool,
+    )
+
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+    return engine
+
