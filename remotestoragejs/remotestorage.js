@@ -4,15 +4,19 @@
  *
  * @class remoteStorage
  */
- class RemoteStorage {
+ export class RemoteStorage {
 
     constructor(url, token) {
-      URL = `https://${url}`,
-      TOKEN = token;
+      this.URL = `${url}`,
+      this.TOKEN = token;
+      this.length_int = null
     }
     // Returns an integer representing the number of data items stored in the Storage object.
-    length() {
-      // todo
+    async length() {
+      console.debug(`${this.URL}/${this.TOKEN}/length`)
+      const response = await fetch(`${this.URL}/${this.TOKEN}/length`);
+      const data = await response.json();
+      return data;
     }
 
     //When passed a number n, this method will return the name of the nth key in the storage.

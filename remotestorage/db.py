@@ -13,6 +13,8 @@ db_url = "sqlite:///remoteStorage.db"
 
 engine = engine = create_engine(
         db_url,
+        connect_args={"check_same_thread": False},
+        echo=True,
         poolclass=StaticPool,
     )
 

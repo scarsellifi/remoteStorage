@@ -1,4 +1,4 @@
-# remoteStorage - a remote version of localStorage
+# remoteStorage - a remote version of localStorage with python backend
 
 ## currently in development
 
