@@ -51,8 +51,9 @@ def getAllItem(token: str):
         
         return keys
 
-@app.get("{token}/key/{id}")
+@app.get("/{token}/key/{id}")
 def key(token: str, id: int):
+    print(id)
     if token != TOKEN:
         return {"error": "invalid token"}
     with Session(engine) as session:
@@ -60,7 +61,7 @@ def key(token: str, id: int):
         result = session.exec(statement).first()
         return result
         
-@app.post("{token}/getItem")
+@app.post("/{token}/getItem")
 def key(token: str, remoteStorage: RemoteStorage):
     if token != TOKEN:
         return {"error": "invalid token"}
@@ -69,7 +70,7 @@ def key(token: str, remoteStorage: RemoteStorage):
         result = session.exec(statement).first()
         return result
 
-@app.post("{token}/setItem")
+@app.post("/{token}/setItem")
 def setItem(token: str, remoteStorage: RemoteStorage):
     if token != TOKEN:
         return {"error": "invalid token"}
