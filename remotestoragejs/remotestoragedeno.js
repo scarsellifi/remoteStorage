@@ -4,7 +4,7 @@
  *
  * @class remoteStorage
  */
- class RemoteStorage {
+ export class RemoteStorage {
 
     constructor(url, token) {
       this.URL = `${url}`,
@@ -72,3 +72,7 @@
     }
   
   }
+  
+
+
+
