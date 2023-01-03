@@ -5,8 +5,7 @@ from sqlmodel.pool import StaticPool
 
 
 class RemoteStorage(SQLModel, table=True):
-    id: int = Field(default=None, primary_key=True)
-    key: str = Field(default=None, index=True)
+    key: str = Field(default=None, index=True, primary_key=True)
     data: str = Field(default=None)
 
 db_url = "sqlite:///remoteStorage.db"
