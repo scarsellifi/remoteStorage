@@ -24,15 +24,16 @@
         "data": "content\n ",
         "key": "key4"
       })
+    async function prova() {
+        const rs = new RemoteStorage('http://0.0.0.0:8000','ABCDEFGHI');
+        let data = await rs.length();
+        console.log(data)
+        alert(JSON.stringify(data));
+    }
 
-    
-    const rs = new RemoteStorage('http://0.0.0.0:8000','ABCDEFGHI');
-    let data = rs.length();
-    console.log(data)
-    alert(JSON.stringify(data));
+    prova();
     
 
-    
      
 </script>
 
