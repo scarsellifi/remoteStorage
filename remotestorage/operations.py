@@ -36,3 +36,9 @@ def setItemOp(remoteStorage: RemoteStorage):
         session.merge(remoteStorage)
         session.commit()
     return remoteStorage
+
+def lengthOp():
+    with Session(engine) as session:
+        statement = select(RemoteStorage)
+        results = session.exec(statement).all()
+        return {"length": len(results)}
