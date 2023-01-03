@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from remotestorage.db import engine, Session, RemoteStorage, select, create_db_and_tables
 import uvicorn
+from remotestorage.operations import getByIdOp, getAllItemsOp, getItemOp, setItemOp
 
 create_db_and_tables()
 
@@ -37,47 +38,30 @@ def length(token: str):
         results = session.exec(statement).all()
         return {"length": len(results)}
 
-@app.get("/{token}/getAllItem")
-def getAllItem(token: str):
+@app.get("/{token}/getAllItems")
+def getAllItems(token: str):
     if token != TOKEN:
         return {"error": "invalid token"}
-    with Session(engine) as session:
-        keys = session.exec(
-            select(
-                RemoteStorage.id,
-                RemoteStorage.key
-                )
-            ).all()
-        
-        return keys
+    return getAllItemsOp()
 
 @app.get("/{token}/key/{id}")
 def key(token: str, id: int):
     print(id)
     if token != TOKEN:
         return {"error": "invalid token"}
-    with Session(engine) as session:
-        statement = select(RemoteStorage).where(RemoteStorage.id == id)
-        result = session.exec(statement).first()
-        return result
+    return getByIdOp(id)
         
 @app.post("/{token}/getItem")
 def key(token: str, remoteStorage: RemoteStorage):
     if token != TOKEN:
         return {"error": "invalid token"}
-    with Session(engine) as session:
-        statement = select(RemoteStorage).where(RemoteStorage.key == remoteStorage.key)
-        result = session.exec(statement).first()
-        return result
+    return getItemOp(remoteStorage.key)
 
 @app.post("/{token}/setItem")
 def setItem(token: str, remoteStorage: RemoteStorage):
     if token != TOKEN:
         return {"error": "invalid token"}
-    with Session(engine) as session:
-        session.merge(remoteStorage)
-        session.commit()
-    return remoteStorage
+    return setItemOp(remoteStorage: RemoteStorage):
 
 def start():
     uvicorn.run(app, host="0.0.0.0", port=8000)
